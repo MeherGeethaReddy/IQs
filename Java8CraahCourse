@@ -1,0 +1,275 @@
+Absolutely, Geetha. Here's a detailed crash course on Java 8, crafted to give you deep clarity on all the major features with practical examples and conceptual reinforcement. This is ideal for interviews and real-world backend development.
+
+
+---
+
+🔥 Java 8 Crash Course: Complete Breakdown
+
+
+---
+
+✅ 1. Lambda Expressions
+
+What: A concise way to write anonymous functions.
+
+Syntax:
+
+(parameters) -> { body }
+
+Example:
+
+List<String> names = Arrays.asList("Geetha", "Raj", "Kiran");
+names.forEach(name -> System.out.println(name));
+
+Why Important:
+
+Reduces boilerplate
+
+Used in Streams and functional interfaces
+
+
+
+---
+
+✅ 2. Functional Interfaces
+
+What: Interface with only one abstract method (SAM - Single Abstract Method).
+
+Examples:
+
+Runnable, Callable
+
+Comparator<T>
+
+Predicate<T>, Function<T,R>, Supplier<T>, Consumer<T>
+
+
+Custom Functional Interface:
+
+@FunctionalInterface
+interface Greet {
+    void sayHello(String name);
+}
+
+
+---
+
+✅ 3. Method References
+
+What: A shorthand notation of calling a method.
+
+Syntax:
+
+ClassName::methodName
+
+Example:
+
+List<String> names = Arrays.asList("Geetha", "Raj");
+names.forEach(System.out::println); // instead of: name -> System.out.println(name)
+
+
+---
+
+✅ 4. Stream API
+
+What: Process collections (lists, maps) in declarative and parallelizable style.
+
+Operations:
+
+Intermediate: map(), filter(), sorted()
+
+Terminal: collect(), forEach(), reduce()
+
+
+Example:
+
+List<String> names = Arrays.asList("Raj", "Ram", "Ravi");
+List<String> filtered = names.stream()
+                             .filter(name -> name.startsWith("R"))
+                             .collect(Collectors.toList());
+
+Benefits:
+
+Lazy processing
+
+Chainable operations
+
+Parallelizable
+
+
+
+---
+
+✅ 5. Default and Static Methods in Interfaces
+
+What: Allows interfaces to have concrete methods with default behavior.
+
+Syntax:
+
+interface Vehicle {
+    default void start() {
+        System.out.println("Vehicle started");
+    }
+    static void stop() {
+        System.out.println("Vehicle stopped");
+    }
+}
+
+
+---
+
+✅ 6. Optional Class
+
+What: Avoids NullPointerException.
+
+Usage:
+
+Optional<String> name = Optional.ofNullable(getName());
+name.ifPresent(System.out::println);
+
+Best Practices:
+
+Use Optional as return type (not as field).
+
+Use isPresent(), ifPresent(), orElse(), orElseGet(), orElseThrow()
+
+
+
+---
+
+✅ 7. New Date and Time API (java.time)
+
+What: Thread-safe, immutable, clean API to handle date/time.
+
+Classes:
+
+LocalDate – date without time
+
+LocalTime – time without date
+
+LocalDateTime – date + time
+
+ZonedDateTime – with timezone
+
+
+Example:
+
+LocalDate today = LocalDate.now();
+LocalDate dob = LocalDate.of(1997, 9, 1);
+Period age = Period.between(dob, today);
+System.out.println(age.getYears());
+
+
+---
+
+✅ 8. Collectors
+
+Used with: stream().collect(...) to gather output
+
+Examples:
+
+List<String> list = Arrays.asList("a", "bb", "ccc");
+
+String joined = list.stream().collect(Collectors.joining(", "));
+Map<Integer, List<String>> groupedByLength = 
+    list.stream().collect(Collectors.groupingBy(String::length));
+
+
+---
+
+✅ 9. Predicate, Function, Consumer, Supplier
+
+Interface	Input	Output	Use Case
+
+Predicate<T>	T	boolean	Filtering
+Function<T,R>	T	R	Transformation
+Consumer<T>	T	void	Action without return
+Supplier<T>	none	T	Lazy value supply
+
+
+Example:
+
+Predicate<String> startsWithA = s -> s.startsWith("A");
+Function<String, Integer> length = s -> s.length();
+Consumer<String> print = s -> System.out.println(s);
+Supplier<Double> random = () -> Math.random();
+
+
+---
+
+✅ 10. Parallel Streams
+
+What: Execute stream operations concurrently.
+
+list.parallelStream().forEach(...);
+
+Caution: Only use for stateless, non-blocking operations with large data.
+
+
+---
+
+✅ 11. Nashorn JavaScript Engine (Deprecated in later versions)
+
+What: Allows Java to run JavaScript code.
+
+ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+engine.eval("print('Hello from JS')");
+
+Useful in earlier Java 8 for scripting inside Java apps.
+
+
+---
+
+✅ 12. CompletableFuture
+
+What: Asynchronous programming without explicit threads.
+
+Example:
+
+CompletableFuture.supplyAsync(() -> {
+    return "Hello";
+}).thenApply(str -> str + " World")
+  .thenAccept(System.out::println);
+
+
+---
+
+✅ 13. Base64 Encoding/Decoding
+
+New in Java 8:
+
+String original = "Geetha";
+String encoded = Base64.getEncoder().encodeToString(original.getBytes());
+System.out.println(encoded);
+
+
+---
+
+📘 Summary Chart:
+
+Feature	Purpose
+
+Lambda	Anonymous function syntax
+Stream API	Functional collection processing
+Optional	Avoid nulls
+Date/Time API	Clean date handling
+Functional Interfaces	Enable lambdas
+Default Methods	Evolution of interfaces
+CompletableFuture	Async programming
+Base64	Encoding utilities
+
+
+
+---
+
+🧠 Want to retain this well?
+
+Repeat concepts via flashcards.
+
+Code each feature once in your IDE.
+
+Teach these concepts to someone else or back to me.
+
+
+Would you like a printable cheatsheet PDF, mini projects using Java 8, or interview Q&A set based on these topics? I can prepare them for you.
+
