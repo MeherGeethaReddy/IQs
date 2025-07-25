@@ -1,0 +1,214 @@
+Certainly, Geetha. Here are 10 solid Core Java interview questions along with detailed explanations that will help anchor the concepts firmly in your memory. Each question touches on a key foundational area of Core Java that’s frequently tested.
+
+
+---
+
+1. What is the difference between == and .equals() in Java?
+
+🔍 Explanation:
+
+== compares object references (memory addresses).
+
+.equals() compares object content.
+
+
+🔧 Example:
+
+String a = new String("hello");
+String b = new String("hello");
+
+System.out.println(a == b);      // false → different objects
+System.out.println(a.equals(b)); // true  → content is same
+
+✅ Key Rule: Use .equals() for object value comparison (e.g., Strings, wrapper classes).
+
+
+---
+
+2. What is the difference between ArrayList and LinkedList?
+
+🔍 Explanation:
+
+ArrayList is backed by a dynamic array; good for random access.
+
+LinkedList is backed by a doubly-linked list; good for frequent insertions/deletions.
+
+
+Operation	ArrayList	LinkedList
+
+Access	Fast (O(1))	Slow (O(n))
+Insert/Delete	Slow (O(n))	Fast (O(1) at ends)
+
+
+✅ Memory Tip: ArrayList = Access fast; LinkedList = Link between nodes.
+
+
+---
+
+3. What are the types of memory areas allocated by JVM?
+
+🔍 Explanation:
+
+1. Heap: For objects and class instances.
+
+
+2. Stack: For method call frames (local vars, method calls).
+
+
+3. Method Area (MetaSpace in Java 8+): Class definitions and static data.
+
+
+4. Program Counter Register: Address of current executing instruction.
+
+
+5. Native Method Stack: For native method calls (non-Java).
+
+
+
+✅ Mnemonic: HSMNP — Heap, Stack, Method area, Native stack, PC Register.
+
+
+---
+
+4. What is the difference between final, finally, and finalize()?
+
+🔍 Explanation:
+
+final: Keyword to make a variable constant, method un-overridable, or class un-inheritable.
+
+finally: Block that always executes after try-catch.
+
+finalize(): Method called by GC before destroying an object (deprecated in recent versions).
+
+
+✅ Memory Tip:
+
+final → immutability
+
+finally → clean up
+
+finalize() → garbage collector callback (legacy)
+
+
+
+---
+
+5. What is the difference between checked and unchecked exceptions?
+
+🔍 Explanation:
+
+Checked Exceptions: Handled at compile time (e.g., IOException, SQLException)
+
+Unchecked Exceptions: Occur at runtime (e.g., NullPointerException, ArithmeticException)
+
+
+✅ Rule of Thumb: If you're forced to handle it → it's checked.
+If it's programmer fault → it's unchecked.
+
+
+---
+
+6. What is the difference between HashMap and Hashtable?
+
+🔍 Explanation:
+
+Feature	HashMap	Hashtable
+
+Thread-Safe	❌ Not Thread-safe	✅ Thread-safe (synchronized)
+Null Keys/Values	✅ 1 null key, multiple null values	❌ No null key or value
+Performance	Faster	Slower (due to sync)
+
+
+✅ Use ConcurrentHashMap in place of Hashtable in modern apps.
+
+
+---
+
+7. Explain how String is immutable in Java.
+
+🔍 Explanation:
+
+Once created, a String object cannot be changed.
+
+Any operation (e.g., concat, replace) returns a new String.
+
+
+🔧 Example:
+
+String s = "hello";
+s.concat(" world"); // new string created, original not modified
+System.out.println(s); // prints "hello"
+
+✅ Why?: For security, thread safety, and String pool optimization.
+
+
+---
+
+8. What is autoboxing and unboxing?
+
+🔍 Explanation:
+
+Autoboxing: Converting primitive → Wrapper class automatically.
+
+Unboxing: Wrapper → primitive.
+
+
+🔧 Example:
+
+int i = 10;
+Integer boxed = i;         // Autoboxing
+int unboxed = boxed;       // Unboxing
+
+✅ Internals: Java uses methods like Integer.valueOf() and intValue() under the hood.
+
+
+---
+
+9. What is the difference between == and compareTo() for Integer values?
+
+🔍 Explanation:
+
+== compares references (unless in the integer cache range -128 to 127).
+
+compareTo() compares numeric value.
+
+
+🔧 Trap Example:
+
+Integer a = 128;
+Integer b = 128;
+System.out.println(a == b); // false
+System.out.println(a.compareTo(b)); // 0 (values are equal)
+
+✅ Caution: Don’t use == for comparing two Integer objects unless you know they're from the cache.
+
+
+---
+
+10. What is the Java Memory Model (JMM)? Why is volatile used?
+
+🔍 Explanation:
+
+JMM defines how variables are read/written in multithreaded code.
+
+volatile ensures:
+
+1. Visibility: Changes in one thread are immediately visible to others.
+
+
+2. No caching: Variable is read from main memory, not thread-local cache.
+
+
+
+
+🔧 Example:
+
+private volatile boolean running = true;
+
+✅ Use volatile when threads share flags or read/write variables without locks.
+
+
+---
+
+Let me know if you'd like a printable PDF, flashcards, or mock quiz based on these to reinforce your retention further.
+
