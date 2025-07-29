@@ -865,6 +865,501 @@ map()
 
 flatMap()
 
+Great! Here's a brand-new batch of Java interview questions #60 to #80 (no repeats from the previous sets). This set dives deeper into real-world problems, Spring Boot, testing, Java features from 9 to 17, performance, and design principles.
 
+
+---
+
+60. What is the difference between Spring Bean scopes: Singleton vs Prototype?
+
+Answer:
+
+Singleton: Only one instance per Spring container (default).
+
+Prototype: A new bean instance is created every time it’s requested.
+
+
+@Component
+@Scope("prototype")
+public class MyBean {}
+
+
+---
+
+61. What is a memory leak in Java and how do you detect it?
+
+Answer: A memory leak occurs when objects are no longer needed but are still referenced.
+
+Detection Tools:
+
+VisualVM
+
+Eclipse MAT
+
+Java Flight Recorder
+
+Heap dumps analysis
+
+
+
+---
+
+62. How does try-with-resources work in Java?
+
+Answer: Introduced in Java 7, it automatically closes resources that implement AutoCloseable.
+
+try (BufferedReader reader = new BufferedReader(new FileReader("file.txt"))) {
+    // use reader
+}
+
+
+---
+
+63. What is @ComponentScan and how does it work in Spring?
+
+Answer: It tells Spring where to scan for annotated classes (like @Component, @Service, etc.).
+
+@ComponentScan(basePackages = "com.example.myapp")
+
+Spring uses reflection to discover beans.
+
+
+---
+
+64. What is the difference between @Controller, @RestController, and @ResponseBody?
+
+@Controller: For web MVC, returns views.
+
+@RestController: Combines @Controller + @ResponseBody.
+
+@ResponseBody: Sends the return value directly in the HTTP response.
+
+
+
+---
+
+65. What is @Transactional and how does it work?
+
+Answer: It manages transaction boundaries. If an exception occurs, it rolls back changes.
+
+@Transactional
+public void updateUser(User user) {
+    // All DB operations here are atomic
+}
+
+Supports nested transactions, rollback rules, and propagation.
+
+
+---
+
+66. What is method reference and how is it different from lambda?
+
+Lambda: (x) -> x.toUpperCase()
+
+Method reference: String::toUpperCase
+
+
+Cleaner when you're simply calling a method.
+
+
+---
+
+67. How do you paginate large data sets in Spring Data JPA?
+
+Answer: Use Pageable and Page<T>.
+
+Page<User> users = userRepository.findAll(PageRequest.of(0, 10));
+
+Returns metadata: total pages, total elements, current page, etc.
+
+
+---
+
+68. What is the difference between eager and lazy loading in Hibernate?
+
+Eager: Loads related entities immediately.
+
+Lazy: Loads only when accessed.
+
+
+Lazy is default for @OneToMany, and eager for @ManyToOne.
+
+
+---
+
+69. What are the differences between Mono and Flux in Spring WebFlux?
+
+Mono: 0 or 1 item (single result).
+
+Flux: 0 to N items (stream of results).
+
+
+WebFlux uses reactive programming for non-blocking I/O.
+
+
+---
+
+70. What are sealed classes in Java 17?
+
+Answer: They restrict which classes can extend them.
+
+public sealed class Animal permits Dog, Cat {}
+
+Enhances control and security over class hierarchies.
+
+
+---
+
+71. What is virtual thread (Project Loom)?
+
+Answer: A lightweight thread introduced in Java 21 to scale concurrency massively.
+
+It’s managed by the JVM rather than OS, enabling millions of threads.
+
+
+---
+
+72. What is the Builder Pattern and when do you use it?
+
+Answer: Used when a class has many optional parameters or when you want to avoid telescoping constructors.
+
+User user = new UserBuilder().name("John").age(30).build();
+
+
+---
+
+73. How does Spring Boot autoconfiguration work?
+
+Answer:
+
+Spring scans classpath and registers default configurations.
+
+Controlled using @EnableAutoConfiguration and spring.factories.
+
+
+It works with condition-based classes like @ConditionalOnClass.
+
+
+---
+
+74. What is the difference between @Bean, @Component, and @Configuration?
+
+Annotation	Purpose
+
+@Component	Marks a class as a Spring Bean
+@Bean	Declares a method that returns a bean manually
+@Configuration	Declares a class that defines beans
+
+
+
+---
+
+75. What is method chaining and how is it used in fluent APIs?
+
+Answer: Calling multiple methods in a single expression.
+
+builder.setName("John").setAge(25).build();
+
+Useful in DSLs and builders.
+
+
+---
+
+76. How do you handle global exceptions in Spring Boot?
+
+Answer: Use @ControllerAdvice + @ExceptionHandler.
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handle(Exception e) {
+        return ResponseEntity.status(500).body("Error occurred");
+    }
+}
+
+
+---
+
+77. What is the difference between a static class and a singleton?
+
+Static class: Cannot be instantiated. All methods are static.
+
+Singleton: One instance per JVM. Allows interface implementation, state retention.
+
+
+
+---
+
+78. What are some common memory tuning JVM options?
+
+-Xms512m     // Initial heap size  
+-Xmx2g       // Max heap size  
+-XX:+UseG1GC // Use G1 garbage collector  
+-XX:+HeapDumpOnOutOfMemoryError
+
+Used to manage memory for high-performance systems.
+
+
+---
+
+79. What is the difference between RuntimeException and Error?
+
+RuntimeException: Application-level bugs (NullPointerException, IllegalArgumentException).
+
+Error: JVM-level problems (OutOfMemoryError, StackOverflowError)—not meant to be caught.
+
+
+
+---
+
+80. What is tight coupling vs loose coupling?
+
+Tight coupling: Classes depend heavily on each other—less flexible.
+
+Loose coupling: Classes interact via interfaces or injection—more maintainable.
+
+
+Spring’s DI promotes loose coupling by managing dependencies externally.
+
+Absolutely! Here’s your next solid batch — Java interview questions #81 to #100, fully unique, no repeats, and perfect for mid-to-senior interviews. This set continues with core Java, adds Spring and Microservices touches, and includes testing, immutability, stream tricks, and Java 11–17 features.
+
+
+---
+
+81. What’s the difference between peek() and forEach() in Java Streams?
+
+Answer:
+
+peek() is an intermediate operation used for debugging or inspecting without consuming.
+
+forEach() is a terminal operation—it ends the stream.
+
+
+list.stream().peek(System.out::println).collect(Collectors.toList());
+
+
+---
+
+82. How do you reverse a List in Java?
+
+Answer: Use Collections.reverse() for in-place reversal.
+
+Collections.reverse(myList);
+
+Or use Streams:
+
+List<String> reversed = list.stream()
+    .collect(Collectors.collectingAndThen(Collectors.toList(), l -> {
+        Collections.reverse(l);
+        return l;
+    }));
+
+
+---
+
+83. What is immutability and how do you create an immutable class in Java?
+
+Answer: An immutable class:
+
+Is final
+
+Has final fields
+
+No setters
+
+Defensive copies on access
+
+
+public final class User {
+    private final String name;
+    public User(String name) { this.name = name; }
+    public String getName() { return name; }
+}
+
+
+---
+
+84. What is method overriding with covariant return types?
+
+Answer: In Java, when overriding a method, the return type can be a subclass of the original return type.
+
+class A {
+    Number getValue() { return 1; }
+}
+class B extends A {
+    Integer getValue() { return 2; } // Covariant return
+}
+
+
+---
+
+85. What is the difference between Exception and Error?
+
+Exception: Recoverable, application-level issues.
+
+Error: Serious issues (like OutOfMemoryError, StackOverflowError) that shouldn't be caught.
+
+
+
+---
+
+86. How does Java handle parameter passing — by value or by reference?
+
+Answer: Java is always pass-by-value. For objects, the reference is passed by value (so changes to object state persist, but reassignments don’t reflect outside).
+
+
+---
+
+87. What is a Predicate vs Function in Java 8?
+
+Interface	Input	Output	Purpose
+
+Predicate	T	boolean	Conditional checks
+Function	T	R	Transformations
+
+
+
+---
+
+88. What is the default scope of a Spring Bean?
+
+Answer: Singleton. One shared instance per Spring context.
+
+
+---
+
+89. What is the difference between isPresent() and ifPresent() in Optional?
+
+isPresent(): Checks if value exists.
+
+ifPresent(): Performs an action if present.
+
+
+optional.ifPresent(val -> System.out.println(val));
+
+
+---
+
+90. How do you write a custom exception in Java?
+
+public class MyException extends Exception {
+    public MyException(String message) {
+        super(message);
+    }
+}
+
+Can also extend RuntimeException for unchecked exceptions.
+
+
+---
+
+91. What is the difference between Mono and CompletableFuture?
+
+Mono (from Reactor): Reactive type, integrates with event loops, supports backpressure.
+
+CompletableFuture: Java’s Future with callbacks, still blocking by default.
+
+
+Use Mono in reactive pipelines, CompletableFuture in async Java logic.
+
+
+---
+
+92. What is the diamond problem in multiple inheritance and how does Java resolve it?
+
+Java doesn’t allow multiple inheritance of classes. With interfaces, if there's ambiguity in default methods, Java forces the class to override the method.
+
+
+---
+
+93. What is a default method conflict in Java interfaces?
+
+If two interfaces define the same default method, the implementing class must override it to resolve ambiguity.
+
+interface A { default void hello() {} }
+interface B { default void hello() {} }
+
+class C implements A, B {
+    public void hello() { A.super.hello(); }
+}
+
+
+---
+
+94. What’s the difference between flatMap() in Optional and Stream?
+
+Optional.flatMap(): Takes a function returning Optional.
+
+Stream.flatMap(): Takes a function returning Stream and flattens nested structures.
+
+
+
+---
+
+95. How do you test exceptions using JUnit 5?
+
+Assertions.assertThrows(IllegalArgumentException.class, () -> {
+    someMethod(null);
+});
+
+
+---
+
+96. How do you mock dependencies using Mockito?
+
+@Mock UserRepository repo;
+@InjectMocks UserService service;
+
+when(repo.findById(1)).thenReturn(Optional.of(user));
+
+Mockito injects mocks into the class under test.
+
+
+---
+
+97. How do you stop infinite recursion in serialization (e.g., bi-directional relationships)?
+
+Use annotations like:
+
+@JsonManagedReference
+
+@JsonBackReference
+(From Jackson for JSON serialization)
+
+
+
+---
+
+98. What is the purpose of @RequestParam vs @PathVariable in Spring?
+
+@RequestParam: Extracts values from query parameters (?id=5)
+
+@PathVariable: Extracts values from URI segments (/user/5)
+
+
+
+---
+
+99. What is the purpose of Optional.orElse() vs Optional.orElseGet()?
+
+orElse(): Always evaluates the argument.
+
+orElseGet(): Lazily evaluates only if empty.
+
+
+optional.orElse(createNewUser());      // always called
+optional.orElseGet(() -> createNewUser()); // called only if needed
+
+
+---
+
+100. What are records in Java and when should you use them?
+
+Answer:
+Java records (Java 14+) are immutable data carriers.
+
+public record User(String name, int age) {}
+
+They auto-generate constructor, getters, equals(), hashCode(), toString().
 
 
