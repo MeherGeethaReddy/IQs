@@ -571,4 +571,300 @@ Reactive Streams (Flow.Publisher, Subscriber)
 
 Rate limiters
 
+You got it! Here's a new set of Java interview questions #41 to #60, no repeats, designed to deepen your understanding across various areas: collections, exceptions, performance tuning, Spring basics, multithreading, and more.
+
+
+---
+
+41. What is the difference between ArrayList and Vector?
+
+Answer:
+
+Both use a dynamic array internally.
+
+ArrayList is not synchronized, so it's faster for single-threaded use.
+
+Vector is synchronized, but considered outdated.
+
+
+Prefer ArrayList unless you explicitly need thread safety—then go for CopyOnWriteArrayList or concurrent collections.
+
+
+---
+
+42. What is a ConcurrentHashMap and how is it different from HashMap?
+
+Answer:
+
+ConcurrentHashMap allows concurrent reads and writes without locking the entire map.
+
+Internally it uses bucket-level locking (segment locking in older versions, synchronized blocks in newer ones).
+
+HashMap is not thread-safe.
+
+
+
+---
+
+43. What causes ConcurrentModificationException and how do you prevent it?
+
+Answer: It occurs when a collection is modified while iterating over it using iterators.
+
+Solutions:
+
+Use Iterator.remove() instead of list.remove().
+
+Use CopyOnWriteArrayList or concurrent collections.
+
+Or use an explicit index loop.
+
+
+
+---
+
+44. What is the difference between throw and throws?
+
+throw: Used to actually throw an exception.
+
+throw new IllegalArgumentException("Invalid input");
+
+throws: Declares what exceptions a method might throw.
+
+public void readFile() throws IOException {}
+
+
+
+---
+
+45. Can you override a private or static method in Java?
+
+Answer:
+
+private methods are not inherited, so they cannot be overridden.
+
+static methods can be hidden, not overridden.
+
+
+
+---
+
+46. What is the difference between ==, .equals(), and compareTo() for comparing objects?
+
+==: Checks reference equality.
+
+.equals(): Checks logical equality.
+
+compareTo(): Used for ordering; returns negative, zero, or positive based on order.
+
+
+str1.equals(str2);
+str1.compareTo(str2); // for sorting
+
+
+---
+
+47. What is autoboxing and unboxing?
+
+Answer: Java automatically converts:
+
+primitive → wrapper (autoboxing)
+
+wrapper → primitive (unboxing)
+
+
+Integer i = 5;   // autoboxing
+int j = i;       // unboxing
+
+Be cautious in collections—autoboxing can lead to performance issues in large-scale systems.
+
+
+---
+
+48. What is a memory leak in Java?
+
+Answer: Occurs when objects are no longer used but still referenced—preventing GC from collecting them.
+
+Common causes:
+
+Static references
+
+Listeners not unregistered
+
+Poor cache implementations
+
+
+
+---
+
+49. What is the use of final keyword for variables, methods, and classes?
+
+Variable: Can’t be reassigned.
+
+Method: Can’t be overridden.
+
+Class: Can’t be extended.
+
+
+final class Vehicle {}
+
+
+---
+
+50. What are the access modifiers in Java?
+
+Modifier	Same Class	Same Package	Subclass	Other Packages
+
+private	✅	❌	❌	❌
+default	✅	✅	❌	❌
+protected	✅	✅	✅	❌
+public	✅	✅	✅	✅
+
+
+
+---
+
+51. What are the different types of exceptions in Java?
+
+Checked (compile-time): Must be declared or handled. Example: IOException.
+
+Unchecked (runtime): NullPointerException, IllegalArgumentException.
+
+Error: Serious problems like OutOfMemoryError, usually not caught.
+
+
+
+---
+
+52. What’s the difference between == and compareTo() for String comparison?
+
+==: Compares references.
+
+compareTo(): Lexicographical ordering.
+
+"apple".compareTo("banana"); // negative
+
+
+Use compareTo() for sorting and ordering.
+
+
+---
+
+53. What are daemon threads in Java?
+
+Answer: Background threads that do not prevent the JVM from exiting.
+
+thread.setDaemon(true);
+
+Common use: Garbage collector, schedulers.
+
+
+---
+
+54. What is finalize() and why is it deprecated?
+
+Answer: It was a method called by the garbage collector before reclaiming an object.
+
+Issues:
+
+Unpredictable
+
+Performance cost
+
+Deprecated in Java 9+
+
+
+Use AutoCloseable or try-with-resources instead.
+
+
+---
+
+55. How does the synchronized keyword work?
+
+It locks either a method or block so only one thread can execute at a time.
+
+
+synchronized(this) {
+  // thread-safe code
+}
+
+Methods can also be declared synchronized.
+
+
+---
+
+56. What is the transient keyword used for?
+
+Answer: Used in serialization to skip fields.
+
+transient String password;
+
+It won’t be saved to disk or network.
+
+
+---
+
+57. What is the difference between peek(), map(), and forEach() in Streams?
+
+map(): Transforms the stream.
+
+peek(): Debugging or inspecting without consuming.
+
+forEach(): Terminal operation to consume values.
+
+
+stream.peek(System.out::println)
+      .map(String::toUpperCase)
+      .forEach(System.out::println);
+
+
+---
+
+58. What is method reference and how is it different from lambda?
+
+Answer: A cleaner alternative to lambda when calling an existing method.
+
+list.forEach(System.out::println); // instead of s -> System.out.println(s)
+
+Types:
+
+Static method
+
+Instance method
+
+Constructor (ClassName::new)
+
+
+
+---
+
+59. What is a Predicate in Java 8?
+
+Answer: A functional interface that takes one argument and returns boolean.
+
+Predicate<String> startsWithA = s -> s.startsWith("A");
+
+Used in filters and validations.
+
+
+---
+
+60. What is Optional and how do you avoid nulls with it?
+
+Answer: Optional is a container for a potentially null value.
+
+Optional<String> name = Optional.ofNullable(getName());
+name.ifPresent(System.out::println);
+
+Methods:
+
+isPresent()
+
+orElse()
+
+map()
+
+flatMap()
+
+
+
 
