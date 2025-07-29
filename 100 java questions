@@ -1,0 +1,282 @@
+Of course! Here's a clean and professional list of 20 Java interview questions with detailed answers, ideal for someone with 5–7 years of experience. This covers Java fundamentals, OOP, concurrency, Java 8 features, and a bit of Spring thrown in.
+
+
+---
+
+1. What’s the difference between == and .equals() in Java?
+
+Answer:
+
+== checks if two references point to the exact same object in memory.
+
+.equals() checks if the two objects are logically “equal”, based on how it’s overridden.
+
+
+For example:
+
+String a = new String("hello");
+String b = new String("hello");
+
+System.out.println(a == b);      // false (different objects)
+System.out.println(a.equals(b)); // true (same content)
+
+
+---
+
+2. What is a HashMap and how does it work internally?
+
+Answer: HashMap stores key-value pairs and uses hashing for fast access.
+
+Internally:
+
+It computes the hash code of the key, then uses it to find a bucket (an index in an array).
+
+If two keys have the same hash, Java handles this using LinkedList or TreeNode (in case of collisions).
+
+
+Since Java 8, when a bucket contains more than 8 entries, it turns into a balanced tree (Red-Black Tree) for faster lookups.
+
+
+---
+
+3. What is the difference between ArrayList and LinkedList?
+
+Feature	ArrayList	LinkedList
+
+Structure	Dynamic array	Doubly-linked list
+Lookup	Fast (O(1) via index)	Slow (O(n))
+Insert/Delete	Slow in middle (shifting)	Fast in middle (just link/unlink nodes)
+Memory	Less overhead	More overhead (extra pointers)
+
+
+
+---
+
+4. What is the difference between String, StringBuilder, and StringBuffer?
+
+String is immutable.
+
+StringBuilder is mutable and not thread-safe.
+
+StringBuffer is mutable and thread-safe.
+
+
+Use StringBuilder when you don’t need synchronization—faster than StringBuffer.
+
+
+---
+
+5. What are functional interfaces?
+
+Answer: An interface with exactly one abstract method. Example: Runnable, Callable, Comparator.
+
+Java 8 introduced @FunctionalInterface to mark these clearly.
+
+@FunctionalInterface
+interface MyFunction {
+    int apply(int a, int b);
+}
+
+Can be used with lambdas:
+
+MyFunction add = (a, b) -> a + b;
+
+
+---
+
+6. Explain Lambda Expressions.
+
+Answer: Lambdas are a way to pass behavior (functions) as data.
+
+List<String> list = Arrays.asList("a", "b", "c");
+list.forEach(s -> System.out.println(s));
+
+They simplify code, especially with Streams and functional programming.
+
+
+---
+
+7. What is the Stream API?
+
+Answer: Introduced in Java 8 to process collections in a functional style.
+
+List<String> names = Arrays.asList("Sam", "John", "Sara");
+List<String> result = names.stream()
+    .filter(name -> name.startsWith("S"))
+    .collect(Collectors.toList());
+
+Key methods: map, filter, reduce, collect.
+
+
+---
+
+8. What’s the difference between final, finally, and finalize()?
+
+final: Used to declare constants or prevent method/variable inheritance.
+
+finally: A block in exception handling that always executes.
+
+finalize(): A method called by the GC before reclaiming memory (deprecated now).
+
+
+
+---
+
+9. Explain method overloading and overriding.
+
+Overloading: Same method name, different parameters (compile-time polymorphism).
+
+Overriding: Subclass changes a superclass method (run-time polymorphism).
+
+
+
+---
+
+10. What’s the difference between abstract class and interface?
+
+Feature	Abstract Class	Interface
+
+Methods	Can have concrete methods	All methods are abstract (pre Java 8)
+Inheritance	One only	Multiple allowed
+Constructor	Can have	Cannot have
+
+
+From Java 8, interfaces can have default and static methods too.
+
+
+---
+
+11. What are default methods in interfaces?
+
+Java 8 introduced them to allow adding new methods to interfaces without breaking existing implementations.
+
+interface MyInterface {
+    default void log() {
+        System.out.println("Default log");
+    }
+}
+
+
+---
+
+12. What’s the difference between Checked and Unchecked exceptions?
+
+Checked: Checked at compile time (IOException, SQLException).
+
+Unchecked: Run-time exceptions (NullPointerException, ArrayIndexOutOfBoundsException).
+
+
+
+---
+
+13. How does Java achieve platform independence?
+
+Because of the Java Virtual Machine (JVM). Java code is compiled to bytecode (.class files), which runs on any machine that has the JVM installed.
+
+
+---
+
+14. What are static and instance blocks?
+
+Static block: Runs once when the class is loaded.
+
+Instance block: Runs every time an object is created.
+
+
+static {
+    System.out.println("Static block");
+}
+{
+    System.out.println("Instance block");
+}
+
+
+---
+
+15. Explain the transient keyword.
+
+Fields marked as transient are skipped during serialization.
+
+transient String password;
+
+Useful for security-sensitive or temporary data.
+
+
+---
+
+16. What is garbage collection in Java?
+
+Automatic memory management. Java’s GC removes unreferenced objects from memory.
+
+You can suggest GC using:
+
+System.gc();
+
+But JVM may or may not honor the request.
+
+
+---
+
+17. What is the difference between synchronized and volatile?
+
+synchronized: Ensures atomicity and visibility using locks.
+
+volatile: Only guarantees visibility, not atomicity.
+
+
+volatile boolean flag = true;
+
+Use volatile for simple flags, and synchronized when multiple threads must coordinate operations.
+
+
+---
+
+18. What is the purpose of the Optional class in Java 8?
+
+To avoid NullPointerException. Wraps a value that may or may not be present.
+
+Optional<String> name = Optional.ofNullable(getName());
+name.ifPresent(System.out::println);
+
+
+---
+
+19. What are the types of class loaders in Java?
+
+1. Bootstrap ClassLoader – Loads core Java classes (rt.jar)
+
+
+2. Extension ClassLoader – Loads ext classes (Java extensions)
+
+
+3. System/Application ClassLoader – Loads from the classpath
+
+
+
+You can also write custom class loaders for dynamic loading.
+
+
+---
+
+20. What is dependency injection in Spring?
+
+A design pattern where the object dependencies are passed (injected) by the framework instead of the class creating them.
+
+Types:
+
+Constructor Injection
+
+Setter Injection
+
+Field Injection (not recommended)
+
+
+@Component
+public class UserService {
+    private final UserRepo repo;
+
+    @Autowired
+    public UserService(UserRepo repo) {
+        this.repo = repo;
+    }
+}
