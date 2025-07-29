@@ -280,3 +280,295 @@ public class UserService {
         this.repo = repo;
     }
 }
+
+Perfect! Continuing from #21 onward, here’s questions 21 to 40, all brand new and not repeated from the previous two sets. These cover advanced Java concepts, multi-threading, JVM internals, design patterns, generics, annotations, and more—ideal for mid-senior interviews:
+
+
+---
+
+21. What is ThreadLocal and where is it used?
+
+Answer:
+ThreadLocal provides thread-confined variables. Each thread accessing a ThreadLocal variable has its own independently initialized copy.
+
+Use case: to avoid sharing variables between threads (e.g., database sessions, user context).
+
+ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 1);
+
+
+---
+
+22. What are enums in Java and why are they useful?
+
+Answer:
+Enums define a fixed set of constants in a type-safe way.
+
+enum Status {
+    SUCCESS, FAILURE, PENDING
+}
+
+They can have fields, constructors, and methods—making them powerful and flexible.
+
+
+---
+
+23. What is the diamond operator (<>) in generics?
+
+Answer:
+Introduced in Java 7 to reduce boilerplate when using generics. It allows type inference.
+
+List<String> list = new ArrayList<>(); // inferred as ArrayList<String>
+
+
+---
+
+24. What are bounded type parameters in generics?
+
+Answer:
+They restrict the types that can be used as type parameters.
+
+<T extends Number> void print(T value) {
+    System.out.println(value.doubleValue());
+}
+
+This means T can be Integer, Double, etc., but not String.
+
+
+---
+
+25. What is type erasure in Java generics?
+
+Answer:
+Java generics use type erasure to maintain backward compatibility. During compilation, the generic types are replaced with their bounds or Object.
+
+This means:
+
+No runtime info about generic types.
+
+You can't use instanceof List<String> (will throw an error).
+
+
+
+---
+
+26. What is the difference between fail-fast and fail-safe iterators?
+
+Feature	Fail-Fast	Fail-Safe
+
+Behavior	Throws ConcurrentModificationException	Works on a clone, no exception
+Examples	ArrayList, HashMap iterator	CopyOnWriteArrayList, ConcurrentHashMap
+
+
+
+---
+
+27. What is a marker interface?
+
+Answer:
+An interface with no methods, used to provide metadata to the JVM or frameworks.
+
+Examples:
+
+Serializable
+
+Cloneable
+
+Remote
+
+
+They are detected using instanceof.
+
+
+---
+
+28. What are annotations in Java?
+
+Answer:
+Metadata applied to code elements—classes, methods, fields, etc. They can affect:
+
+Compilation
+
+Runtime behavior (via reflection)
+
+Tooling
+
+
+Examples:
+
+@Override
+
+@Deprecated
+
+Custom annotations like @MyCustomAnnotation
+
+
+
+---
+
+29. How do you create a custom annotation?
+
+Answer:
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface LogExecutionTime {}
+
+Use @interface, and specify retention policy and target type.
+
+
+---
+
+30. What is reflection in Java?
+
+Answer:
+A powerful API (java.lang.reflect) that allows inspecting or modifying classes, fields, methods at runtime.
+
+Use cases: frameworks, serialization tools, dependency injection engines.
+
+Drawback: slower and breaks encapsulation.
+
+
+---
+
+31. What is the difference between shallow copy and deep copy?
+
+Shallow Copy: Duplicates object structure but not nested objects. Both original and copy share nested references.
+
+Deep Copy: Recursively copies all nested objects as well.
+
+
+You can use:
+
+clone() (shallow by default)
+
+Custom copy constructors
+
+Serialization (for deep copy)
+
+
+
+---
+
+32. What is the purpose of transient and static in serialization?
+
+transient: Excludes a field from serialization.
+
+static: Belongs to the class, not the instance—so it's never serialized.
+
+
+
+---
+
+33. What are soft, weak, and phantom references in Java?
+
+They’re part of java.lang.ref.*, used in memory-sensitive apps:
+
+SoftReference: Cleared when memory is low.
+
+WeakReference: Cleared on next GC cycle.
+
+PhantomReference: Used for post-mortem cleanup, enqueued after GC.
+
+
+
+---
+
+34. What is the difference between stack and heap memory?
+
+Stack: Stores method calls and local variables. Fast, auto-managed, LIFO.
+
+Heap: Stores objects and class instances. Managed by GC.
+
+
+
+---
+
+35. What is the ClassLoader in Java?
+
+Answer:
+It's responsible for loading .class files into the JVM. Types:
+
+1. Bootstrap ClassLoader
+
+
+2. Extension ClassLoader
+
+
+3. System/Application ClassLoader
+
+
+
+You can also create custom class loaders (used in frameworks, plugins).
+
+
+---
+
+36. What is the volatile keyword and when would you not use it?
+
+Answer:
+Ensures visibility, but not atomicity. Don't use it for compound actions (e.g., count++)—prefer AtomicInteger or synchronized blocks in such cases.
+
+
+---
+
+37. What is double-checked locking?
+
+A pattern to ensure that a singleton is created only once, with minimal synchronization overhead.
+
+public class Singleton {
+    private static volatile Singleton instance;
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+
+
+---
+
+38. What is the Builder Pattern?
+
+Used to construct complex objects step-by-step, especially when there are many optional fields.
+
+Person p = new Person.Builder()
+                  .name("Alice")
+                  .age(30)
+                  .build();
+
+Clean, readable, avoids constructor telescoping.
+
+
+---
+
+39. What is the ForkJoinPool and where is it used?
+
+Introduced in Java 7, ForkJoinPool uses divide-and-conquer strategy for parallelism.
+
+ForkJoinPool pool = new ForkJoinPool();
+pool.invoke(new RecursiveTaskExample());
+
+Efficient for large recursive tasks like sorting, searching.
+
+
+---
+
+40. What is backpressure and how is it handled in Java?
+
+Answer:
+Backpressure occurs when a producer generates data faster than the consumer can process.
+
+Handled via:
+
+Blocking queues (LinkedBlockingQueue)
+
+Reactive Streams (Flow.Publisher, Subscriber)
+
+Rate limiters
+
+
